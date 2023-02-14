@@ -1,0 +1,52 @@
+﻿<html>
+	<head>
+		<title>javascript administrator</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<script src="js/global.js"></script>
+		<script src="js/jCommonSE.js"></script>
+		<script src="js/calls.js"></script>
+		<style>
+			.card{
+				width:140px;
+				border:1px solid gray;
+				padding:5px;
+				margin:8px;
+				float:left;
+				min-height:280px;
+				background-color:white;
+				border-radius:5px;
+			}
+			.header{
+				position:fixed;
+				top:0px;
+				left:0px;
+				height:50px;
+				width:100%;
+				background-color:white;
+				border-bottom:1px solid black;
+			}
+		</style>
+	</head>
+	<body style="background-color:#ddd;">
+		<div class="header">
+			<div style="padding:5px;">
+				<span style="font-size:35px;padding-left:20px;font-weight:bold;font-family:궁서;letter-spacing:-0.2em;">업무일지</span>
+				<span style="font-weight:bold;font-family:Courier New;">v.0.l&nbsp;&nbsp;</span>
+				<button id="btnRefresh">Refresh</button>
+			</div>
+		</div>
+		<div id="contents" style="width:100%;margin:auto;margin-top:70px;">
+			<!-- <div style="">
+				<input id="fFile" type="file" />
+				<button id="btnFile">파일보내기</button>
+				<a id="aFile"></a>
+			</div> -->
+			<div>
+				<button id="btnPastToday">과거오늘</button>
+				<button id="btnGoBoard">게시판으로</button>
+			</div>
+		</div>
+		<script src="js/diary.js"></script>
+	</body>
+</html>

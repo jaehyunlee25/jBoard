@@ -1,0 +1,32 @@
+﻿<?php
+	header('Access-Control-Allow-Origin: *');
+?>
+<html>
+	<head>
+		<title>javascript administrator</title>
+		<meta charset="utf-8">
+		<script src="js/global.js"></script>
+		<script src="js/jCommonSE.js"></script>
+		<script src="js/jSQL.js"></script>
+		<script src="js/jScreen.js"></script>
+		<script src="js/jDATALAYER.js"></script>
+		<script src="js/explorer.js"></script>
+		<script src="js/jBoard.js"></script>
+		<script>
+			var cf=new jCommon(),
+				dl=new datalayer(),
+				sc=new jSCREEN(),
+				jb=new jBOARD();
+		</script>
+	</head>
+	<body>
+		<form enctype="multipart/form-data" action="data/regFile.php" method="POST" target="_self">
+			<!-- MAX_FILE_SIZE는 file 입력 필드보다 먼저 나와야 합니다 -->
+			<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+			<!-- input의 name은 $_FILES 배열의 name을 결정합니다 -->
+			이 파일을 전송합니다: <input name="aaa" type="file" />
+			<input type="submit" value="파일 전송" />
+		</form>
+		
+	</body>
+</html>

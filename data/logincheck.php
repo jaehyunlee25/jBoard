@@ -1,0 +1,9 @@
+<?php
+session_start();
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+require("../data/regClass.html");
+$name=$_SESSION['name'];
+$arr=array("name"=>"$name");
+echo(json_encode($arr));
+?>

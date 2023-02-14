@@ -1,0 +1,69 @@
+<?php
+	
+	header("Access-Control-Allow-Origin:*");
+	ini_set('display_errors',1);
+	ini_set('display_startup_errors',1);
+	require("../data/regClass.html");
+	
+	$version=phpversion();
+	$vres=strcmp($version,"4.4.9");
+	$jdb=new JDB("mnemosynesolutions.co.kr","root","2ssibalnoma!","dbjhlee2603"); 
+	
+	//ip address
+	$ip=$_SERVER["REMOTE_ADDR"];
+	$device=isset($_POST["device"])?$_POST["device"]:"";
+	//if($vres==1) date_default_timezone_set('Asia/Seoul');
+	date_default_timezone_set('Asia/Seoul');
+	$time=date('Y').date('m').date('d').date('H').date('i').date('s').date('w');
+	
+	//str
+	$work=isset($_POST["work"])?$_POST["work"]:"";
+	
+	$id=isset($_POST["id"])?$_POST["id"]:"";
+	$kind=isset($_POST["kind"])?$_POST["kind"]:"";
+	$writer=isset($_POST["writer"])?$_POST["writer"]:"";
+	$title=isset($_POST["title"])?$_POST["title"]:"";
+	$cont=isset($_POST["cont"])?$_POST["cont"]:"";
+	$password=isset($_POST["password"])?$_POST["password"]:"";
+	
+	$writer=addslashes($writer);
+	$title=addslashes($title);
+	$cont=addslashes($cont);
+	
+	$finid=isset($_POST["finid"])?$_POST["finid"]:"";
+	$finid=(int)$finid;
+
+	if(strcmp($work,"select")==0){
+		if($id==0) $jdb->trav("*","gboard","where kind='$kind' and useYn='Y' order by id desc;");
+		else $jdb->trav("*","gboard","where kind='$kind' and stat=$id and useYn='Y' order by id desc;");
+	
+	}else if(strcmp($work,"insert")==0){
+		$jdb->insert("gboard","$id,'$kind','$writer','$title','$cont','$password','$ip','$time',0,'Y'");
+		if($id==0) $jdb->trav("*","gboard","where kind='$kind' and useYn='Y' order by id desc;");
+		else $jdb->trav("*","gboard","where kind='$kind' and stat=$id and useYn='Y' order by id desc;");
+	
+	}else if(strcmp($work,"update")==0){
+		$result=mysql_query("update gboard set title='$title', cont='$cont' where id=$id");
+		$jdb->trav("*","gboard","where id=$id and useYn='Y'");
+	
+	}else if(strcmp($work,"delete")==0){
+		$result=mysql_query("update gboard set useYn='N' where id=$id or stat=$id");
+		$jdb->trav("*","gboard","where kind='$kind' and useYn='Y' order by id desc;");
+	
+	}else if(strcmp($work,"clickupdate")==0){
+		$result=mysql_query("update gboard set click=click+1 where id=$id");
+		$jdb->trav("*","gboard","where id=$id and useYn='Y'");
+	
+	}else if(strcmp($work,"rpdelete")==0){
+		echo($id);
+		$result=mysql_query("update gboard set useYn='N' where id=$id");
+		$jdb->trav("*","gboard","where kind='$kind' and stat!=0 and useYn='Y' order by id desc;");
+	
+	}else if(strcmp($work,"pwcheck")==0){
+		$result=mysql_query("select * from gboard where id='$id' and useYn='Y' order by id desc;");
+		if($row=mysql_fetch_array($result))	if(strcmp($password,$row["password"])==0) echo("true");
+	
+	}else if(strcmp($work,"gp")==0){
+		echo("§cñ|§rñ");
+	}
+?>
